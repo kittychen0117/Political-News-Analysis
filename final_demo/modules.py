@@ -18,29 +18,30 @@ font = font_manager.FontProperties(fname='../tools/msjh.ttc',
                                    weight='bold',
                                    style='normal', size=16)
 
-
-# jieba.set_dictionary('../jieba_data/dict.txt.big')
-# jieba.load_userdict('../jieba_data/userdict.txt')
+#modify
+jieba.set_dictionary('../jieba_data/dict.txt.big')
+jieba.load_userdict('../jieba_data/userdict.txt')
+#modify
 stopwords = []
 with open('../jieba_data/stopwords.txt', 'r', encoding='UTF-8') as file:
     for each in file.readlines():
         stopwords.append(each.strip())
     stopwords.append(' ')
-
-# with open('crawler/data/new_talk.pkl', 'rb') as f:
-#     data = pickle.load(f)
+#modify
+with open('../crawler/data/new_talk.pkl', 'rb') as f:
+     data = pickle.load(f)
     
-# data = data[::-1]
-# contents = [news['content'] for news in data]
+data = data[::-1]
+contents = [news['content'] for news in data]
 
-# date_list = [news['date'] for news in data]
-# all_date = sorted(list(set(date_list)))
-# aall_date = [date[5:] for date in all_date][::-1]
-# date_index = [date_list.index(each_date) for each_date in all_date]
-# date_index.append(len(date_list)-1)
-# number_of_news = [date_index[i+1] - date_index[i]-1 for i in range(len(date_index)-1)]
-# number_of_terms = [sum([sum(data[ni]['cutted_dict'].values()) for ni in range(date_index[i], date_index[i+1])]) for i in range(len(date_index)-1)]
-
+date_list = [news['date'] for news in data]
+all_date = sorted(list(set(date_list)))
+aall_date = [date[5:] for date in all_date][::-1]
+date_index = [date_list.index(each_date) for each_date in all_date]
+date_index.append(len(date_list)-1)
+number_of_news = [date_index[i+1] - date_index[i]-1 for i in range(len(date_index)-1)]
+number_of_terms = [sum([sum(data[ni]['cutted_dict'].values()) for ni in range(date_index[i], date_index[i+1])]) for i in range(len(date_index)-1)]
+#modify
 
 def remove_punctuation(content_string, user_pc=False):
     if(user_pc):
@@ -59,7 +60,9 @@ def remove_stopwords_from_dict(word_dict, stopwords):
 
 def lcut_to_dict(lcut):
     word_dict = dict(Counter(lcut))
-#     word_dict.pop(' ')
+#modify
+    word_dict.pop(' ')
+#modify    
     return(remove_stopwords_from_dict(word_dict, stopwords))
 
 def sort_dict_by_values(d):
@@ -86,7 +89,9 @@ def get_coshow(contents):
     cut_content = list(filter(lambda x: x!=' ', cut_content))
     for i in range(len(cut_content)-1):
         wcw = cut_content[i] + cut_content[i+1]
-    #     print(wcw)
+    #modify
+    #    print(wcw)
+    #modify
         try:
             coshow_dict[wcw] = coshow_dict[wcw] + 1
         except:
